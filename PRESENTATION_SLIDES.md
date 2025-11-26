@@ -1,85 +1,121 @@
-# 📊 Ecommerce Backend – Presentation Outline
+Slide 1 — Title
 
----
+Ecommerce Backend API
+Tech Stack: Django + DRF + PostgreSQL + Vercel
+Developer: [Your Name]
 
-## Slide 1 — Title
-**Ecommerce Backend API**  
-Django + DRF + PostgreSQL + Vercel  
-Developer: <Your Name>
+Slide 2 — Problem Statement
 
----
+Challenges for Online Shops:
 
-## Slide 2 — Problem Statement
-Online shops require:
-- Secure user accounts  
-- Product management  
-- Shopping carts  
-- Order processing  
-- Scalable backend architecture  
+Secure user accounts
 
-This project solves these backend challenges.
+Product catalog management
 
----
+Shopping cart functionality
 
-## Slide 3 — System Architecture
-- Django REST API  
-- PostgreSQL database  
-- JWT authentication  
-- Serverless deployment on Vercel  
-- Modular apps: accounts, products, cart, orders  
+Order processing & history
 
----
+Scalable backend architecture
 
-## Slide 4 — Features
-- User registration & login  
-- Product CRUD  
-- Cart operations  
-- Order creation  
-- Token-based authentication  
+Solution: This project addresses all backend challenges with a modular, secure, and cloud-deployable API.
 
----
+Slide 3 — System Architecture
 
-## Slide 5 — ERD Overview
-Highlights:
-- User ↔ Orders  
-- Order ↔ OrderItems  
-- User ↔ CartItems  
-- Product ↔ CartItems / OrderItems  
+Backend: Django REST Framework (DRF)
 
-(See full diagram in ERD_DESIGN.md)
+Database: PostgreSQL
 
----
+Authentication: JWT with HTTP-only cookies
 
-## Slide 6 — Testing Strategy
-- Postman / Thunder Client  
-- Endpoint validation  
-- Authentication tests  
-- CRUD operations  
+Deployment: Vercel serverless hosting
 
----
+Modular Apps:
 
-## Slide 7 — Deployment Workflow
-- Vercel serverless hosting  
-- PostgreSQL cloud database  
-- Environment variables  
-- Auto-deploy with Git  
+accounts_app – user registration, login, roles
 
----
+products_app – product CRUD operations
 
-## Slide 8 — Demo
-Live demo covers:
-- Registration  
-- Login  
-- Product listing  
-- Adding to cart  
-- Creating an order  
+cart_app – cart management
 
----
+orders_app – order processing
 
-## Slide 9 — Conclusion
-- Fully functional ecommerce backend  
-- Secure  
-- Scalable  
-- Cloud deployed  
+Slide 4 — Features
+
+User Management:
+
+Registration, login
+
+JWT authentication
+
+Role-based access (admin & user)
+
+Product Management: Create, update, delete, list products
+
+Cart Management: Add/remove/update cart items
+
+Order Management: Checkout, order history
+
+Security: HTTP-only cookie tokens
+
+Slide 5 — ERD Overview
+
+Core relationships:
+
+User ↔ Orders (1-to-many)
+
+Order ↔ OrderItems (1-to-many)
+
+User ↔ CartItems (1-to-many)
+
+Product ↔ CartItems / OrderItems (1-to-many)
+
+Full ERD diagram available in ERD_DESIGN.md
+
+Slide 6 — Testing Strategy
+
+Tools: Postman / Thunder Client
+
+Validate all CRUD operations
+
+Test authentication flows
+
+Test cart and order workflows end-to-end
+
+Slide 7 — Deployment Workflow
+
+Hosting: Vercel (serverless)
+
+Database: PostgreSQL (cloud-hosted)
+
+Environment Management: .env for secret keys & credentials
+
+CI/CD: Auto-deploy via Git push
+
+Slide 8 — Demo
+
+Live demo highlights:
+
+User registration & login
+
+Product listing
+
+Add products to cart
+
+Create an order
+
+Token refresh & logout
+
+Slide 9 — Conclusion
+
+Fully functional ecommerce backend API
+
+Secure authentication & role-based access
+
+Modular & scalable architecture
+
+Cloud deployment via Vercel
+
+Ready for production
 
 Thank you!
