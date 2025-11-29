@@ -63,6 +63,8 @@ Below is the conceptual data model for the ecommerce backend.
 
 ---
 
+
+
 # 📐 Relationships Summary
 
 - **User 1 → M Orders**
@@ -247,4 +249,123 @@ Add attributes inside each entity box (PKs at the top, FKs, other fields below).
 
 If you want, I can draw a clean ASCII-style ERD that you can directly paste into documentation, or I can give a diagram-ready dbdiagram.io script for easy visualization.
 
-Do you want me to do that next?
+1. dbdiagram.io Version
+Table CustomUser {
+  id uuid [pk]
+  email varchar [unique]
+  username varchar
+  first_name varchar
+  last_name varchar
+  phone_number varchar
+  role varchar
+  is_active boolean
+  is_staff boolean
+  is_superuser boolean
+  password varchar
+  created_at datetime
+  updated_at datetime
+}
+
+Table Product {
+  id int [pk, increment]
+  name varchar
+  description text
+  price decimal
+  stock int
+  image_url varchar
+  created_at datetime
+  updated_at datetime
+}
+
+Table Cart {
+  id int [pk, increment]
+  user_id uuid [ref: > CustomUser.id]
+  created_at datetime
+  updated_at datetime
+}
+
+Table CartItem {
+  id int [pk, increment]
+  cart_id int [ref: > Cart.id]
+  product_id int [ref: > Product.id]
+  quantity int
+  added_at datetime
+}
+
+Table Order {
+  id int [pk, increment]
+  user_id uuid [ref: > CustomUser.id]
+  total_amount decimal
+  status varchar
+  created_at datetime
+  updated_at datetime
+}
+
+Table OrderItem {
+  id int [pk, increment]
+  order_id int [ref: > Order.id]
+  product_id int [ref: > Product.id]
+  quantity int
+  price decimal
+}
+
+
+SQL Schema Version
+CREATE TABLE CustomUser (
+    id UUID PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    username VARCHAR(255),
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    phone_number VARCHAR(50),
+    role VARCHAR(50),
+    is_active BOOLEAN DEFAULT TRUE,
+    is_staff BOOLEAN DEFAULT FALSE,
+    is_superuser BOOLEAN DEFAULT FALSE,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);
+
+CREATE TABLE Product (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    price DECIMAL(10,2) NOT NULL,
+    stock INT NOT NULL,
+    image_url VARCHAR(500),
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);
+
+CREATE TABLE Cart (
+    id SERIAL PRIMARY KEY,
+    user_id UUID REFERENCES CustomUser(id),
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);
+
+CREATE TABLE CartItem (
+    id SERIAL PRIMARY KEY,
+    cart_id INT REFERENCES Cart(id),
+    product_id INT REFERENCES Product(id),
+    quantity INT NOT NULL,
+    added_at TIMESTAMP
+);
+
+CREATE TABLE Order (
+    id SERIAL PRIMARY KEY,
+    user_id UUID REFERENCES CustomUser(id),
+    total_amount DECIMAL(10,2),
+    status VARCHAR(50),
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);
+
+CREATE TABLE OrderItem (
+    id SERIAL PRIMARY KEY,
+    order_id INT REFERENCES Order(id),
+    product_id INT REFERENCES Product(id),
+    quantity INT,
+    price DECIMAL(10,2)
+);
