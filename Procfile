@@ -1,1 +1,1 @@
-web: gunicorn ecommerce_backend.ecommerce_backend.wsgi
+web: gunicorn ecommerce_backend.wsgi --chdir ecommerce_backend
