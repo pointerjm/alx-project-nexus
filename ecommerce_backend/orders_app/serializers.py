@@ -1,13 +1,16 @@
 # orders_app/serializers.py
 from rest_framework import serializers
 from .models import Order, OrderItem
+from products_app.models import Product
 from products_app.serializers import ProductSerializer
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
+    # Nested product info for read operations
     product = ProductSerializer(read_only=True)
+    # Accept product ID for create/update
     product_id = serializers.PrimaryKeyRelatedField(
-        queryset=None,  # Will be set dynamically in view
+        queryset=Product.objects.all(),  # ✅ Fixed: provide a valid queryset
         source='product',
         write_only=True
     )
@@ -30,6 +33,7 @@ class OrderSerializer(serializers.ModelSerializer):
         items_data = validated_data.pop('items')
         user = self.context['request'].user
         order = Order.objects.create(user=user, **validated_data)
+
         total_amount = 0
         for item_data in items_data:
             product = item_data['product']
@@ -37,6 +41,7 @@ class OrderSerializer(serializers.ModelSerializer):
             price = product.price
             OrderItem.objects.create(order=order, product=product, quantity=quantity, price=price)
             total_amount += price * quantity
+
         order.total_amount = total_amount
         order.save()
         return order
