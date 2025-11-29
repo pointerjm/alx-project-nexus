@@ -30,7 +30,6 @@ if RENDER_EXTERNAL_HOSTNAME:
 # ----------------------------
 # APPLICATIONS
 # ----------------------------
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -52,7 +51,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
 
-    # for Render static file hosting
+    # For Render static file hosting
     'whitenoise.middleware.WhiteNoiseMiddleware',
 
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -92,7 +91,7 @@ DATABASES = {
         'USER': config("DB_USER"),
         'PASSWORD': config("DB_PASSWORD"),
         'HOST': config("DB_HOST"),
-        'PORT': config("DB_PORT", default=5432),
+        'PORT': config("DB_PORT", default=5432, cast=int),
     }
 }
 
@@ -147,6 +146,7 @@ REST_FRAMEWORK = {
 # ----------------------------
 # JWT SETTINGS
 # ----------------------------
+# Make sure env values are integers: ACCESS_TOKEN_LIFETIME in minutes, REFRESH_TOKEN_LIFETIME in days
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=int(config("SIMPLE_JWT_ACCESS_TOKEN_LIFETIME", default=5))),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=int(config("SIMPLE_JWT_REFRESH_TOKEN_LIFETIME", default=1))),
@@ -158,8 +158,7 @@ SIMPLE_JWT = {
 # ----------------------------
 # CORS CONFIG
 # ----------------------------
-
-# DO NOT USE CORS_ALLOW_ALL_ORIGINS IN PRODUCTION
+# Only allow specific origins in production
 CORS_ALLOWED_ORIGINS = config(
     "CORS_ALLOWED_ORIGINS",
     default="http://localhost:3000,http://127.0.0.1:3000",
@@ -171,7 +170,6 @@ CORS_ALLOW_CREDENTIALS = True
 # ----------------------------
 # COOKIE SECURITY
 # ----------------------------
-# Must be TRUE in production over HTTPS
 SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SECURE = not DEBUG
 
